@@ -2,6 +2,7 @@
 
 const axios = require("axios");
 const { Command } = require("commander");
+
 const program = new Command();
 
 const cityInstance = axios.create({
@@ -27,7 +28,9 @@ const getWeatherByCity = async (city, type) => {
     console.log(err);
   }
 };
+
 program.version("1.0.0");
+
 program
   .command("show <city> [type]")
   .description("get weather info by city")

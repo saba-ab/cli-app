@@ -27,22 +27,47 @@ const getBudget = async () => {
 };
 
 const manageBudget = async (type, amount) => {
+  let transaction = {
+    id: 0,
+    transactionType: type,
+    amount: amount,
+  };
   try {
     amount = parseInt(amount);
     const wallet = await getBudget();
     if (type === "add") {
       wallet.budget += amount;
-      wallet.transactions.push(`${amount} added to wallet`);
-    } else if (type === "spend") {
+      if (wallet.transactions.length === 0) {
+        wallet.transactions.push({
+          ...transaction,
+          id: 1,
+        });
+      } else {
+        wallet.transactions.push({
+          ...transaction,
+          id: wallet.transactions[wallet.transactions.length - 1].id + 1,
+        });
+      }
+    }
+    if (type === "spend") {
       wallet.budget -= amount;
-      wallet.transactions.push(`${amount} spent from your wallet`);
+      if (wallet.transactions.length === 0) {
+        wallet.transactions.push({
+          ...transaction,
+          id: 1,
+        });
+      } else {
+        wallet.transactions.push({
+          ...transaction,
+          id: wallet.transactions[wallet.transactions.length - 1].id + 1,
+        });
+      }
     }
     await writeFile(budgetFile, JSON.stringify(wallet));
   } catch (err) {
     console.log(err);
   }
 };
-
 const showWallet = async () => {
   const wallet = await getBudget();
   console.log(wallet);
