@@ -1,0 +1,10 @@
+{
+  "budget": 203,
+  "transactions": [
+    { "id": 1, "transactionType": "add", "amount": "101" },
+    { "id": 2, "transactionType": "add", "amount": "101" },
+    { "id": 3, "transactionType": "add", "amount": "101" },
+    { "id": 4, "transactionType": "add", "amount": "101" },
+    { "id": 5, "transactionType": "spend", "amount": "201" }
+  ]
+}
